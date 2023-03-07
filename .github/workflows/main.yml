@@ -72,6 +72,8 @@ jobs:
         run: |
           tag=$(date +%Y-%m-%d_%H%M%S)
           echo "::set-output name=tag::$tag"
+      - name: ls
+        run: ls *
 
       - name: Release
         uses: softprops/action-gh-release@v1
@@ -81,5 +83,3 @@ jobs:
           #body_path: rel_note.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: ls
-        run: ls *
