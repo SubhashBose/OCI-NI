@@ -74,8 +74,9 @@ jobs:
           echo "::set-output name=tag::$tag"
       - name: ls
         run: |
+          ls -lah *
           unzip artifact
-          ls *
+          ls -lah *
 
       - name: Release
         uses: softprops/action-gh-release@v1
