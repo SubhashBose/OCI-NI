@@ -74,7 +74,7 @@ jobs:
           echo "::set-output name=tag::$tag"
       - name: ls
         run: |
-          ls -lah *
+          ls -lah -R
           unzip artifact
           ls -lah *
 
