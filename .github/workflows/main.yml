@@ -73,7 +73,9 @@ jobs:
           tag=$(date +%Y-%m-%d_%H%M%S)
           echo "::set-output name=tag::$tag"
       - name: ls
-        run: ls *
+        run: |
+          unzip artifact
+          ls *
 
       - name: Release
         uses: softprops/action-gh-release@v1
