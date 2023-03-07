@@ -8,7 +8,7 @@ import (
 	"golang.org/x/crypto/chacha20"
 )
 
-func CPU(interval time.Duration) {
+func CPU(interval time.Duration, duration time.Duration) {
 	var buffer []byte
 	if len(Buffers) > 0 {
 		buffer = Buffers[0].B[:4*MiB]
@@ -24,13 +24,17 @@ func CPU(interval time.Duration) {
 	}
 
 	for {
-		for i := 0; i < 8; i++ {
-			go func() {
-				for i := 0; i < 64; i++ {
-					cipher.XORKeyStream(buffer, buffer)
-				}
-			}()
+		tend := time.Now().Add(duration)
+		for ok := true; ok; ok = tend.After(time.Now()) {
+			for i := 0; i < 8; i++ {
+				go func() {
+					for i := 0; i < 64; i++ {
+						cipher.XORKeyStream(buffer, buffer)
+					}
+				}()
+			}
 		}
+		
 
 		fmt.Println("[CPU] Successfully wasted on", time.Now())
 
