@@ -24,15 +24,15 @@ func CPU(interval time.Duration, duration time.Duration) {
 	}
 
 	for {
-		tend := time.Now().Add(duration)
-		for ok := true; ok; ok = tend.After(time.Now()) {
-			for i := 0; i < 8; i++ {
-				go func() {
+		for i := 0; i < 8; i++ {
+			go func() {
+				tend := time.Now().Add(duration)
+				for ok := true; ok; ok = tend.After(time.Now()) {
 					for i := 0; i < 64; i++ {
 						cipher.XORKeyStream(buffer, buffer)
 					}
-				}()
-			}
+				}
+			}()
 		}
 		
 
