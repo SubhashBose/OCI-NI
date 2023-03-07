@@ -68,16 +68,16 @@ jobs:
     #    id: "automatic_releases"
     
       - name: Create tag
-          id: create_tag
-          run: |
-            tag=$(date +%Y-%m-%d_%H%M%S)
-            echo "::set-output name=tag::$tag"
+        id: create_tag
+        run: |
+          tag=$(date +%Y-%m-%d_%H%M%S)
+          echo "::set-output name=tag::$tag"
 
-        - name: Release
-          uses: softprops/action-gh-release@v1
-          with:
-            files: NI_*
-            tag_name: ${{ steps.create_tag.outputs.tag }}
-            #body_path: rel_note.txt
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: NI_*
+          tag_name: ${{ steps.create_tag.outputs.tag }}
+          #body_path: rel_note.txt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
