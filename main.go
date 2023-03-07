@@ -14,7 +14,7 @@ const Version = "0.2.2"
 
 var (
 	FlagCPU                    = flag.Duration("c", 0, "Interval for CPU waste")
-	FlagCPUduration            = flag.Duration("c", 0, "Min duration for each CPU waste")
+	FlagCPUduration            = flag.Duration("d", 0, "Min duration for each CPU waste")
 	FlagMemory                 = flag.Int("m", 0, "GiB of memory waste")
 	FlagNetwork                = flag.Duration("n", 0, "Interval for network speed test")
 	FlagNetworkConnectionCount = flag.Int("t", 10, "Set concurrent connections for network speed test")
