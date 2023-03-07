@@ -31,7 +31,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.18
+          go-version: 1.20
 
       - name: Build for Linux
         env:
@@ -41,6 +41,7 @@ jobs:
         run: |
           v=$(echo ${GITHUB_REF} | awk -F/ '{print substr($3,2,10);}')
           #go build -x -v -mod=vendor -ldflags "-X main.version=${v} -w -s" -o "NI_${GOOS}-${GOARCH}"
+          go tool dist list
           go build -x -v -o "NI_${GOOS}-${GOARCH}"
 
       - name: Upload to artifact storage
@@ -72,9 +73,6 @@ jobs:
         run: |
           tag=$(date +%Y-%m-%d_%H%M%S)
           echo "::set-output name=tag::$tag"
-      - name: ls
-        run: |
-          ls -lah -R
 
       - name: Release
         uses: softprops/action-gh-release@v1
