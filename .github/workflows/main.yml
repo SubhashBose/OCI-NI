@@ -55,9 +55,9 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v2
-        with:
-          path: NI_*
+      - uses: actions/download-artifact@v3
+        #with:
+        #  path: ./
     #
     #  - uses: "marvinpinto/action-automatic-releases@latest"
     #    with:
@@ -75,8 +75,6 @@ jobs:
       - name: ls
         run: |
           ls -lah -R
-          unzip artifact
-          ls -lah *
 
       - name: Release
         uses: softprops/action-gh-release@v1
