@@ -1,0 +1,45 @@
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    #runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      # Runs a single command using the runners shell
+      - name: compile
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y intltool libmpfr* libcurl4-openssl-dev doxygen
+          ./autogen.sh  --disable-shared --enable-static  --enable-compiled-definitions
+          make
+          
+      - name: Test
+        run: ./src/qalc '5.6h to h'
+      
+      - name: Create tag
+        id: create_tag
+        run: |
+          tag=$(date +%Y-%m-%d_%H%M%S)
+          echo "::set-output name=tag::$tag"
+      
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: src/qalc
+          tag_name: ${{ steps.create_tag.outputs.tag }}
+          #body_path: rel_note.txt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
