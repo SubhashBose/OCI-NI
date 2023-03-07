@@ -41,7 +41,7 @@ jobs:
         run: |
           v=$(echo ${GITHUB_REF} | awk -F/ '{print substr($3,2,10);}')
           #go build -x -v -mod=vendor -ldflags "-X main.version=${v} -w -s" -o "NI_${GOOS}-${GOARCH}"
-          go build -x -v -mod=vendor -o "NI_${GOOS}-${GOARCH}"
+          go build -x -v -o "NI_${GOOS}-${GOARCH}"
 
       - name: Upload to artifact storage
         uses: actions/upload-artifact@v2
