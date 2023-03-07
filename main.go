@@ -14,6 +14,7 @@ const Version = "0.2.2"
 
 var (
 	FlagCPU                    = flag.Duration("c", 0, "Interval for CPU waste")
+	FlagCPUduration            = flag.Duration("c", 0, "Min duration for each CPU waste")
 	FlagMemory                 = flag.Int("m", 0, "GiB of memory waste")
 	FlagNetwork                = flag.Duration("n", 0, "Interval for network speed test")
 	FlagNetworkConnectionCount = flag.Int("t", 10, "Set concurrent connections for network speed test")
@@ -21,9 +22,8 @@ var (
 
 func main() {
 	rand.Seed(time.Now().UnixNano())
-	fmt.Println("NeverIdle", Version, "- Getting worse from here.")
+	fmt.Println(Version, "- Getting worse from here.")
 	fmt.Println("Platform:", runtime.GOOS, ",", runtime.GOARCH, ",", runtime.Version())
-	fmt.Println("GitHub: https://github.com/layou233/NeverIdle")
 
 	flag.Parse()
 	nothingEnabled := true
@@ -40,8 +40,8 @@ func main() {
 	if *FlagCPU != 0 {
 		nothingEnabled = false
 		fmt.Println("====================")
-		fmt.Println("Starting CPU wasting with interval", *FlagCPU)
-		go waste.CPU(*FlagCPU)
+		fmt.Println("Starting CPU wasting with interval", *FlagCPU, "of min duration", *FlagCPUduration, "each")
+		go waste.CPU(*FlagCPU, *FlagCPUduration)
 		runtime.Gosched()
 		fmt.Println("====================")
 	}
