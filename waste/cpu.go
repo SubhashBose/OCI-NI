@@ -34,7 +34,7 @@ func CPU(interval time.Duration, duration time.Duration) {
 				}
 			}()
 		}
-		
+
 		fmt.Println("[CPU] Successfully wasted on", time.Now())
 
 		// try to construct a new cipher
