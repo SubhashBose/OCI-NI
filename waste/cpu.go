@@ -41,7 +41,7 @@ func CPU(interval time.Duration, duration time.Duration, percent float64, CPUcou
 			}()
 		}
 
-		fmt.Println("[CPU] Starting stressed on", time.Now())
+		fmt.Println("[CPU] Starting stress on", time.Now())
 
 		// try to construct a new cipher
 		newCipher, err := chacha20.NewUnauthenticatedCipher(buffer[:32], buffer[:24])

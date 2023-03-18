@@ -1,25 +1,27 @@
-# NeverIdle
+# NI strees utility for servers
+
+Use to periodically strees CPU and to load memory and network bandwidth.
 
 ## Usage
 
 
 ```shell
-./NeverIdle -c 2h5m30s -d 15m -p 50 -m 2 -n 4h
+./NI -cpu 2h5m30s -cpu-d 15m -cpu-p 50 -mem 2.5 -net 4h
 ```
 
 ```
-  -c duration
-        Interval for CPU load
-  -d duration
-        Min duration for each CPU load (default 2s)
-  -p float
-        CPU load percentage (default 100)
-  -ncpu int
-        Number of CPU cores to load (default 2)
-  -m float
+  -cpu duration
+        Interval of CPU streess (enables CPU stress)
+  -cpu-d duration
+        Min. duration for each CPU stress (default 2s)
+  -cpu-n int
+        Number of CPU cores to stress (default 2)
+  -cpu-p float
+        Each CPU's load percentage (default 100)
+  -mem float
         GiB of memory to use
-  -n duration
+  -net duration
         Interval for network speed test
-  -t int
+  -net-c int
         Set concurrent connections for network speed test (default 10)
 ```

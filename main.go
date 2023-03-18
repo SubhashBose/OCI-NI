@@ -58,7 +58,9 @@ func main() {
 	}
 
 	if nothingEnabled {
+		fmt.Println("Options:")
 		flag.PrintDefaults()
+		fmt.Println("\nFor duration or interval flags use time units. E.g., 1h5m10s, 5m, 1h, etc.")
 	} else {
 		// fatal error: all goroutines are asleep - deadlock!
 		// select {} // fall asleep
