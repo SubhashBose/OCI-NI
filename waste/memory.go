@@ -2,7 +2,7 @@ package waste
 
 import "math/rand"
 
-var Buffers []*MiBObject
+var Buffers []*GiBObject
 
 const (
 	KiB = 1024
@@ -19,7 +19,7 @@ type MiBObject struct {
 }
 
 func Memory(gib float64) {
-	mib=int(gib*1024)
+	mib:=int(gib*1024)
 	Buffers = make([]*MiBObject, 0, mib)
 	for mib > 0 {
 		o := new(MiBObject)
