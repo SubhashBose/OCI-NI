@@ -29,7 +29,7 @@ func CPU(interval time.Duration, duration time.Duration, percent float64) {
 				tend := time.Now().Add(duration)
 				for ok := true; ok; ok = tend.After(time.Now()) {
 					loop_st:= time.Now()
-					for i := 0; i < 64; i++ {
+					for i := 0; i < 1; i++ {
 						cipher.XORKeyStream(buffer, buffer)
 					}
 					loop_dur:= time.Now().Sub(loop_st)
