@@ -11,11 +11,11 @@ const (
 )
 
 type GiBObject struct {
-	B [GiB]byte
+	B [MiB]byte
 }
 
 func Memory(gib float64) {
-	Buffers = make([]*GiBObject, 0, gib)
+	Buffers = make([]*GiBObject, 0, int(gib*1024))
 	for gib > 0 {
 		o := new(GiBObject)
 		rand.Read(o.B[:])
