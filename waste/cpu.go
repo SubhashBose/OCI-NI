@@ -32,8 +32,8 @@ func CPU(interval time.Duration, duration time.Duration, percent float64) {
 					for i := 0; i < 64; i++ {
 						cipher.XORKeyStream(buffer, buffer)
 					}
-					loop_dur:= time.Now().Sub(tloop_sts)
-					time.Sleep(loop_dur/percent*(100-percent))
+					loop_dur:= time.Now().Sub(loop_st)
+					time.Sleep(loop_dur*time.Duration((100-percent)/percent) )
 				}
 			}()
 		}
