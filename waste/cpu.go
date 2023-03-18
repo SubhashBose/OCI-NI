@@ -4,11 +4,12 @@ import (
 	"fmt"
 	"math/rand"
 	"time"
+	"runtime"
 
 	"golang.org/x/crypto/chacha20"
 )
 
-func CPU(interval time.Duration, duration time.Duration, percent float64) {
+func CPU(interval time.Duration, duration time.Duration, percent float64, CPUcount int) {
 	var buffer []byte
 	if len(Buffers) > 0 {
 		buffer = Buffers[0].B[:4*MiB]
@@ -23,9 +24,11 @@ func CPU(interval time.Duration, duration time.Duration, percent float64) {
 		panic(cipher)
 	}
 
+	runtime.GOMAXPROCS(CPUcount)
 	for {
-		for i := 0; i < 8; i++ {
+		for i := 0; i < CPUcount; i++ {
 			go func() {
+				runtime.LockOSThread()
 				tend := time.Now().Add(duration)
 				for ok := true; ok; ok = tend.After(time.Now()) {
 					loop_st:= time.Now()

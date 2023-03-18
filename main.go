@@ -16,6 +16,7 @@ var (
 	FlagCPU                    = flag.Duration("c", 0, "Interval for CPU waste")
 	FlagCPUduration            = flag.Duration("d", 0, "Min duration for each CPU waste")
 	FlagCPUpercent             = flag.Float64("p", 100.0, "CPU load percentage")
+	FlagCPUcount               = flag.Int("ncpu", runtime.NumCPU(), "Number of CPU threads to use")
 	FlagMemory                 = flag.Float64("m", 0, "GiB of memory waste")
 	FlagNetwork                = flag.Duration("n", 0, "Interval for network speed test")
 	FlagNetworkConnectionCount = flag.Int("t", 10, "Set concurrent connections for network speed test")
@@ -41,8 +42,8 @@ func main() {
 	if *FlagCPU != 0 {
 		nothingEnabled = false
 		fmt.Println("====================")
-		fmt.Println("Starting", *FlagCPUpercent, "% CPU load with interval", *FlagCPU, "of min duration", *FlagCPUduration, "each")
-		go waste.CPU(*FlagCPU, *FlagCPUduration, *FlagCPUpercent)
+		fmt.Println("Starting", *FlagCPUpercent, "% load of", *FlagCPUcount,"CPU threads with interval", *FlagCPU, "of min duration", *FlagCPUduration, "each")
+		go waste.CPU(*FlagCPU, *FlagCPUduration, *FlagCPUpercent, *FlagCPUcount)
 		runtime.Gosched()
 		fmt.Println("====================")
 	}
