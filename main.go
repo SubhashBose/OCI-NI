@@ -17,7 +17,7 @@ var (
 	FlagCPUduration            = flag.Duration("d", 2*time.Second, "Min duration for each CPU load")
 	FlagCPUpercent             = flag.Float64("p", 100.0, "CPU load percentage")
 	FlagCPUcount               = flag.Int("ncpu", runtime.NumCPU(), "Number of CPU cores to load")
-	FlagMemory                 = flag.Float64("m", 0, "GiB of memory use")
+	FlagMemory                 = flag.Float64("m", 0, "GiB of memory to use")
 	FlagNetwork                = flag.Duration("n", 0, "Interval for network speed test")
 	FlagNetworkConnectionCount = flag.Int("t", 10, "Set concurrent connections for network speed test")
 )
