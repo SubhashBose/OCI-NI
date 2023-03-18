@@ -2,7 +2,7 @@ package waste
 
 import "math/rand"
 
-var Buffers []*1024*MiBObject
+var Buffers []*GiBObject
 
 const (
 	KiB = 1024
@@ -14,17 +14,12 @@ type GiBObject struct {
 	B [GiB]byte
 }
 
-type MiBObject struct {
-	B [MiB]byte
-}
-
-func Memory(gib float64) {
-	mib:=int(gib*1024)
-	Buffers = make([]*MiBObject, 0, mib)
-	for mib > 0 {
-		o := new(MiBObject)
+func Memory(gib int) {
+	Buffers = make([]*GiBObject, 0, gib)
+	for gib > 0 {
+		o := new(GiBObject)
 		rand.Read(o.B[:])
 		Buffers = append(Buffers, o)
-		mib -= 1
+		gib -= 1
 	}
 }
