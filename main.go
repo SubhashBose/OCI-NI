@@ -7,19 +7,19 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/layou233/neveridle/waste"
+	"NI/waste"
 )
 
 const Version = "1.2"
 
 var (
-	FlagCPU                    = flag.Duration("c", 0, "Interval for CPU load")
-	FlagCPUduration            = flag.Duration("d", 2*time.Second, "Min duration for each CPU load")
-	FlagCPUpercent             = flag.Float64("p", 100.0, "CPU load percentage")
-	FlagCPUcount               = flag.Int("ncpu", runtime.NumCPU(), "Number of CPU cores to load")
-	FlagMemory                 = flag.Float64("m", 0, "GiB of memory to use")
-	FlagNetwork                = flag.Duration("n", 0, "Interval for network speed test")
-	FlagNetworkConnectionCount = flag.Int("t", 10, "Set concurrent connections for network speed test")
+	FlagCPU                    = flag.Duration("cpu", 0, "Interval of CPU streess (enables CPU stress)")
+	FlagCPUduration            = flag.Duration("cpu-d", 2*time.Second, "Min. duration for each CPU stress")
+	FlagCPUpercent             = flag.Float64("cpu-p", 100.0, "Each CPU's load percentage")
+	FlagCPUcount               = flag.Int("cpu-n", runtime.NumCPU(), "Number of CPU cores to stress")
+	FlagMemory                 = flag.Float64("mem", 0, "GiB of memory to use")
+	FlagNetwork                = flag.Duration("net", 0, "Interval for network speed test")
+	FlagNetworkConnectionCount = flag.Int("net-c", 10, "Set concurrent connections for network speed test")
 )
 
 func main() {

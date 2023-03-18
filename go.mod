@@ -1,4 +1,4 @@
-module github.com/layou233/neveridle
+module NI
 
 go 1.19
 
