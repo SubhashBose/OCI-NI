@@ -2,7 +2,7 @@ package waste
 
 import "math/rand"
 
-var Buffers []*GiBObject
+var Buffers []*1024*MiBObject
 
 const (
 	KiB = 1024
