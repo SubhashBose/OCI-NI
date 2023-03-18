@@ -8,7 +8,7 @@ import (
 	"golang.org/x/crypto/chacha20"
 )
 
-func CPU(interval time.Duration, duration time.Duration) {
+func CPU(interval time.Duration, duration time.Duration, percent float64) {
 	var buffer []byte
 	if len(Buffers) > 0 {
 		buffer = Buffers[0].B[:4*MiB]
@@ -28,9 +28,12 @@ func CPU(interval time.Duration, duration time.Duration) {
 			go func() {
 				tend := time.Now().Add(duration)
 				for ok := true; ok; ok = tend.After(time.Now()) {
+					loop_st:= time.Now()
 					for i := 0; i < 64; i++ {
 						cipher.XORKeyStream(buffer, buffer)
 					}
+					loop_dur:= time.Now().Sub(tloop_sts)
+					time.Sleep(loop_dur/percent*(100-percent))
 				}
 			}()
 		}
