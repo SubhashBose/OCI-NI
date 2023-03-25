@@ -56,7 +56,6 @@ func CPU(interval time.Duration, duration time.Duration, percent float64, CPUcou
 		newCipher, err := chacha20.NewUnauthenticatedCipher(buffer[:32], buffer[:24])
 		if err == nil {
 			cipher = newCipher
-			XOR_cnt=0
 		}
 
 		time.Sleep(interval)
