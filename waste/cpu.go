@@ -40,7 +40,7 @@ func CPU(interval time.Duration, duration time.Duration, percent float64, CPUcou
 						lp_cnt++;
 					}
 					loop_dur:= time.Since(loop_st)
-					if lp_cnt>131000 {
+					if lp_cnt>131000/CPUcount {
 						newCipher, err := chacha20.NewUnauthenticatedCipher(buffer[:32], buffer[:24])
 						if err == nil {
 							cipher = newCipher
