@@ -40,7 +40,7 @@ func CPU(interval time.Duration, duration time.Duration, percent float64, CPUcou
 					}
 					XOR_cnt+=16;
 					loop_dur:= time.Since(loop_st)
-					if XOR_cnt>=4*MiB/CPUcount { // 4MiB/32B=131072
+					if XOR_cnt>=4*MiB {
 						newCipher, err := chacha20.NewUnauthenticatedCipher(buffer[:32], buffer[:24])
 						if err == nil {
 							cipher = newCipher
