@@ -23,6 +23,7 @@ func CPU(interval time.Duration, duration time.Duration, percent float64, CPUcou
 	if err != nil {
 		panic(cipher)
 	}
+	XOR_cnt:=0
 
 	runtime.GOMAXPROCS(CPUcount)
 	for {
@@ -31,7 +32,6 @@ func CPU(interval time.Duration, duration time.Duration, percent float64, CPUcou
 		for i := 0; i < CPUcount; i++ {
 			go func() {
 				runtime.LockOSThread()
-				XOR_cnt:=0
 				tend := time.Now().Add(duration)
 				for ok := true; ok; ok = tend.After(time.Now()) {
 					loop_st:= time.Now()
@@ -40,7 +40,7 @@ func CPU(interval time.Duration, duration time.Duration, percent float64, CPUcou
 					}
 					XOR_cnt+=1;
 					loop_dur:= time.Since(loop_st)
-					if XOR_cnt>=4*MiB/CPUcount {
+					if XOR_cnt>=4*MiB/32 {
 						newCipher, err := chacha20.NewUnauthenticatedCipher(buffer[:32], buffer[:24])
 						if err == nil {
 							cipher = newCipher
@@ -56,6 +56,7 @@ func CPU(interval time.Duration, duration time.Duration, percent float64, CPUcou
 		newCipher, err := chacha20.NewUnauthenticatedCipher(buffer[:32], buffer[:24])
 		if err == nil {
 			cipher = newCipher
+			XOR_cnt=0
 		}
 
 		time.Sleep(interval)
