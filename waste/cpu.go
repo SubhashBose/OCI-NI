@@ -12,9 +12,9 @@ import (
 func CPU(interval time.Duration, duration time.Duration, percent float64, CPUcount int) {
 	var buffer []byte
 	if len(Buffers) > 0 {
-		buffer = Buffers[0].B[:4*MiB]
+		buffer = Buffers[0].B[:6*MiB]
 	} else {
-		buffer = make([]byte, 4*MiB)
+		buffer = make([]byte, 6*MiB)
 	}
 	rand.Read(buffer)
 
@@ -23,6 +23,7 @@ func CPU(interval time.Duration, duration time.Duration, percent float64, CPUcou
 	if err != nil {
 		panic(cipher)
 	}
+	XOR_cnt:=0
 
 	runtime.GOMAXPROCS(CPUcount)
 	for {
@@ -32,22 +33,21 @@ func CPU(interval time.Duration, duration time.Duration, percent float64, CPUcou
 			go func() {
 				runtime.LockOSThread()
 				tend := time.Now().Add(duration)
-				lp_cnt:=0
 				for ok := true; ok; ok = tend.After(time.Now()) {
 					loop_st:= time.Now()
-					for i := 0; i < 1; i++ {
+					for i := 0; i < 16; i++ {
 						cipher.XORKeyStream(buffer, buffer)
-						lp_cnt++;
 					}
-					if lp_cnt>131000/CPUcount { // 4MiB/32B/Ncores
+					XOR_cnt+=16;
+					loop_dur:= time.Since(loop_st)
+					if XOR_cnt>=4*MiB/CPUcount { // 4MiB/32B=131072
 						newCipher, err := chacha20.NewUnauthenticatedCipher(buffer[:32], buffer[:24])
 						if err == nil {
 							cipher = newCipher
-							lp_cnt=0
+							XOR_cnt=0
 						}
 					}
-					loop_dur:= time.Since(loop_st)
-					time.Sleep(loop_dur*time.Duration((100-percent)/percent*1000)/time.Microsecond )
+					time.Sleep(loop_dur*time.Duration((100-percent)/percent*1000)/time.Microsecond ) // percent part is rounded down to 1ns, so mult by 1000 then div by 1us
 				}
 			}()
 		}
