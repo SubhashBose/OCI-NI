@@ -39,7 +39,6 @@ func CPU(interval time.Duration, duration time.Duration, percent float64, CPUcou
 						cipher.XORKeyStream(buffer, buffer)
 						lp_cnt++;
 					}
-					loop_dur:= time.Since(loop_st)
 					if lp_cnt>131000/CPUcount {
 						newCipher, err := chacha20.NewUnauthenticatedCipher(buffer[:32], buffer[:24])
 						if err == nil {
@@ -47,6 +46,7 @@ func CPU(interval time.Duration, duration time.Duration, percent float64, CPUcou
 							lp_cnt=0
 						}
 					}
+					loop_dur:= time.Since(loop_st)
 					time.Sleep(loop_dur*time.Duration((100-percent)/percent) )
 				}
 			}()
