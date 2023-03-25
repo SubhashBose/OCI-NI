@@ -35,10 +35,10 @@ func CPU(interval time.Duration, duration time.Duration, percent float64, CPUcou
 				tend := time.Now().Add(duration)
 				for ok := true; ok; ok = tend.After(time.Now()) {
 					loop_st:= time.Now()
-					for i := 0; i < 16; i++ {
+					for i := 0; i < 1; i++ {
 						cipher.XORKeyStream(buffer, buffer)
 					}
-					XOR_cnt+=16;
+					XOR_cnt+=1;
 					loop_dur:= time.Since(loop_st)
 					if XOR_cnt>=4*MiB {
 						newCipher, err := chacha20.NewUnauthenticatedCipher(buffer[:32], buffer[:24])
