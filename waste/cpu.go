@@ -7,9 +7,10 @@ import (
 	"runtime"
 
 	"golang.org/x/crypto/chacha20"
+	"github.com/shirou/gopsutil/cpu"
 )
 
-func CPU(interval time.Duration, duration time.Duration, percent float64, CPUcount int) {
+func CPU(interval time.Duration, duration time.Duration, targetPercent float64, CPUcount int, globalmaxPercent float64) {
 	var buffer []byte
 	if len(Buffers) > 0 {
 		buffer = Buffers[0].B[:6*MiB]
@@ -17,6 +18,25 @@ func CPU(interval time.Duration, duration time.Duration, percent float64, CPUcou
 		buffer = make([]byte, 6*MiB)
 	}
 	rand.Read(buffer)
+
+	percent:=targetPercent
+
+	if globalmaxPercent<100{
+		go func(){
+			p:= []float64{0}
+			for {
+				p,_=cpu.Percent(0, false)
+				percent=targetPercent-(p[0]-globalmaxPercent)
+				if percent>targetPercent{
+					percent=targetPercent
+				}
+				if percent<0.1{
+					percent=0.1
+				}
+				time.Sleep(time.Second)
+			}
+		}()
+	}
 
 	runtime.GOMAXPROCS(CPUcount)
 	for {
@@ -49,6 +69,7 @@ func CPU(interval time.Duration, duration time.Duration, percent float64, CPUcou
 							//fmt.Println("[CPU] Replacing new", time.Now())
 						}
 					}
+					
 					time.Sleep(loop_dur*time.Duration((100-percent)/percent*1000)/time.Microsecond ) // percent part is rounded down to 1ns, so mult by 1000 then div by 1us
 				}
 			}()
