@@ -12,9 +12,9 @@ import (
 func CPU(interval time.Duration, duration time.Duration, percent float64, CPUcount int) {
 	var buffer []byte
 	if len(Buffers) > 0 {
-		buffer = Buffers[0].B[:4*MiB]
+		buffer = Buffers[0].B[:6*MiB]
 	} else {
-		buffer = make([]byte, 4*MiB)
+		buffer = make([]byte, 6*MiB)
 	}
 	rand.Read(buffer)
 
@@ -40,13 +40,13 @@ func CPU(interval time.Duration, duration time.Duration, percent float64, CPUcou
 						XOR_cnt++;
 					}
 					loop_dur:= time.Since(loop_st)
-					if XOR_cnt>=(1<<32)/(4*MiB/64) /2 {
+					if XOR_cnt>=(1<<32)/(6*MiB/64) *2/3 {
 						newCipher, err := chacha20.NewUnauthenticatedCipher(buffer[:32], buffer[:24])
-						fmt.Println("[CPU] Counter reached", time.Now())
+						//fmt.Println("[CPU] Counter reached", time.Now())
 						if err == nil {
 							cipher = newCipher
 							XOR_cnt=0
-							fmt.Println("[CPU] Replacing new", time.Now())
+							//fmt.Println("[CPU] Replacing new", time.Now())
 						}
 					}
 					time.Sleep(loop_dur*time.Duration((100-percent)/percent*1000)/time.Microsecond ) // percent part is rounded down to 1ns, so mult by 1000 then div by 1us
