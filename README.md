@@ -14,8 +14,10 @@ Use to periodically strees CPU and to load memory and network bandwidth.
         Interval of CPU streess (enables CPU stress)
   -cpu-d duration
         Min. duration for each CPU stress (default 2s)
+  -cpu-m float
+        Max limit of system's total CPU load perceent (default 100)
   -cpu-n int
-        Number of CPU cores to stress (default 2)
+        Number of CPU cores to stress (default AllCores)
   -cpu-p float
         Each CPU's load percentage (default 100)
   -mem float

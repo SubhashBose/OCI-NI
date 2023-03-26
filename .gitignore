@@ -16,6 +16,6 @@ atlassian-ide-plugin.xml
 *.out
 *.linux-amd64
 *.linux-arm64
-*-linux-amd64
-*-linux-arm64
-*-windows-amd64
+*_linux-amd64
+*_linux-arm64
+*_windows-amd64

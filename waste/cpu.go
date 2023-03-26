@@ -24,9 +24,11 @@ func CPU(interval time.Duration, duration time.Duration, targetPercent float64, 
 	if globalmaxPercent<100{
 		go func(){
 			p:= []float64{0}
+			p,_=cpu.Percent(0, false)
+			time.Sleep(time.Second)
 			for {
 				p,_=cpu.Percent(0, false)
-				percent=targetPercent-(p[0]-globalmaxPercent)
+				percent=percent-(p[0]-globalmaxPercent)
 				if percent>targetPercent{
 					percent=targetPercent
 				}
