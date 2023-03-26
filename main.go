@@ -10,14 +10,14 @@ import (
 	"NI/waste"
 )
 
-const Version = "1.2"
+const Version = "1.4"
 
 var (
 	FlagCPU                    = flag.Duration("cpu", 0, "Interval of CPU streess (enables CPU stress)")
 	FlagCPUduration            = flag.Duration("cpu-d", 2*time.Second, "Min. duration for each CPU stress")
 	FlagCPUpercent             = flag.Float64("cpu-p", 100.0, "Each CPU's load percentage to generate")
 	FlagCPUcount               = flag.Int("cpu-n", runtime.NumCPU(), "Number of CPU cores to stress")
-	FlagCPUglobalmaxperent     = flag.Float64("cpu-m", 100.0, "Max limit of system's total CPU load perceent")
+	FlagCPUglobalmaxperent     = flag.Float64("cpu-m", 100.0, "Max limit of system's total CPU load percent")
 	FlagMemory                 = flag.Float64("mem", 0, "GiB of memory to use")
 	FlagNetwork                = flag.Duration("net", 0, "Interval for network speed test")
 	FlagNetworkConnectionCount = flag.Int("net-c", 10, "Set concurrent connections for network speed test")
