@@ -27,7 +27,7 @@ func CPU(interval time.Duration, duration time.Duration, percent float64, CPUcou
 		if err != nil {
 			panic(cipher)
 		}
-		XOR_cnt:=0
+		//XOR_cnt:=0
 
 		for i := 0; i < CPUcount; i++ {
 			go func() {
@@ -37,16 +37,17 @@ func CPU(interval time.Duration, duration time.Duration, percent float64, CPUcou
 					loop_st:= time.Now()
 					for i := 0; i < 1; i++ {
 						cipher.XORKeyStream(buffer, buffer)
-						XOR_cnt++;
+						//XOR_cnt++;
 					}
 					loop_dur:= time.Since(loop_st)
-					if XOR_cnt>=4*MiB/64 {
+					//if XOR_cnt>=4*MiB/64 {
+					if uint64(cipher.counter)+64*5 > 1<<32 {
 						newCipher, err := chacha20.NewUnauthenticatedCipher(buffer[:32], buffer[:24])
-						//fmt.Println("[CPU] Counter reached", time.Now())
+						fmt.Println("[CPU] Counter reached", time.Now())
 						if err == nil {
 							cipher = newCipher
-							XOR_cnt=0
-							//fmt.Println("[CPU] Replacing new", time.Now())
+							//XOR_cnt=0
+							fmt.Println("[CPU] Replacing new", time.Now())
 						}
 					}
 					time.Sleep(loop_dur*time.Duration((100-percent)/percent*1000)/time.Microsecond ) // percent part is rounded down to 1ns, so mult by 1000 then div by 1us
