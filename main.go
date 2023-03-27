@@ -43,7 +43,7 @@ func main() {
 	if *FlagCPU != 0 {
 		nothingEnabled = false
 		fmt.Println("====================")
-		fmt.Println("Starting", *FlagCPUpercent, "% load of", *FlagCPUcount,"CPUs with interval", *FlagCPU, "of min duration", *FlagCPUduration, "each")
+		fmt.Println("Starting", *FlagCPUpercent, "% load of", *FlagCPUcount,"CPUs with interval of", *FlagCPU, ", min duration", *FlagCPUduration, "each, and max. system  load", *FlagCPUglobalmaxperen)
 		go waste.CPU(*FlagCPU, *FlagCPUduration, *FlagCPUpercent, *FlagCPUcount, *FlagCPUglobalmaxperent)
 		runtime.Gosched()
 		fmt.Println("====================")
